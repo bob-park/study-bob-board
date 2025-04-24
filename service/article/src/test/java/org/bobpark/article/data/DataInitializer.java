@@ -9,12 +9,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import org.junit.jupiter.api.Test;
 
-import kuke.board.common.snowflake.Snowflake;
+import org.bobpark.common.snowflake.Snowflake;
 
 import org.bobpark.article.domain.article.entity.Article;
 import org.bobpark.article.domain.article.repository.ArticleRepository;
@@ -33,7 +32,7 @@ public class DataInitializer {
     Snowflake snowflake = new Snowflake();
     CountDownLatch latch = new CountDownLatch(EXECUTE_COUNT);
 
-    static final int BULK_INSERT_SIZE = 2;
+    static final int BULK_INSERT_SIZE = 2_000;
     static final int EXECUTE_COUNT = 6_000;
 
     @Test

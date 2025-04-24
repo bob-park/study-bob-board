@@ -1,4 +1,4 @@
-package kuke.board.common.snowflake;
+package org.bobpark.common.snowflake;
 
 import java.util.random.RandomGenerator;
 

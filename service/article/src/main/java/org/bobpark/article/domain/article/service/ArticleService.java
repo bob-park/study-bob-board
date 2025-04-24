@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kuke.board.common.snowflake.Snowflake;
+import org.bobpark.common.snowflake.Snowflake;
 
 import com.malgn.common.exception.NotFoundException;
 import com.malgn.common.model.Id;
