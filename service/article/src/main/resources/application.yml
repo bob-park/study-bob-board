@@ -61,6 +61,12 @@ spring:
     virtual:
       enabled: on
 
+## decorator
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: off
+
 ## eureka
 eureka:
   instance:
