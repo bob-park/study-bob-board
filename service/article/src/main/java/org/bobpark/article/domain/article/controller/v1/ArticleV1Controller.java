@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.malgn.common.model.Id;
 
 import org.bobpark.article.domain.article.entity.Article;
+import org.bobpark.article.domain.article.model.ArticlePageResponse;
 import org.bobpark.article.domain.article.model.ArticleResponse;
 import org.bobpark.article.domain.article.model.CreateArticleRequest;
 import org.bobpark.article.domain.article.model.UpdateArticleRequest;
@@ -33,6 +34,11 @@ public class ArticleV1Controller {
     @PostMapping(path = "")
     public ArticleResponse create(@RequestBody CreateArticleRequest createRequest) {
         return articleService.create(createRequest);
+    }
+
+    @GetMapping(path = "")
+    public ArticlePageResponse readAll(Long boardId, Long page, Long pageSize) {
+        return articleService.readAll(boardId, page, pageSize);
     }
 
     @GetMapping(path = "{articleId:\\d+}")

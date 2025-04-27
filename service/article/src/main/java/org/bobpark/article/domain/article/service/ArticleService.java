@@ -1,11 +1,15 @@
 package org.bobpark.article.domain.article.service;
 
+import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.bobpark.article.domain.article.model.ArticlePageResponse;
+import org.bobpark.article.domain.article.utils.PageLimitCalculator;
 import org.bobpark.common.snowflake.Snowflake;
 
 import com.malgn.common.exception.NotFoundException;
@@ -92,6 +96,20 @@ public class ArticleService {
     @Transactional
     public void delete(Id<Article, Long> articleId) {
         articleRepository.deleteById(articleId.getValue());
+    }
+
+    public ArticlePageResponse readAll(Long boardId, Long page, Long pageSize) {
+
+        List<Article> articles = articleRepository.findAll(boardId, (page - 1) * pageSize, pageSize);
+        Long count = articleRepository.count(boardId, PageLimitCalculator.calculatePageLimit(page, pageSize, 10L));
+
+        return ArticlePageResponse.builder()
+            .articles(
+                articles.stream()
+                    .map(ArticleResponse::from)
+                    .toList())
+            .articleCount(count)
+            .build();
     }
 
 }
