@@ -1,8 +1,11 @@
 package org.bobpark.article.domain.article.controller.v1;
 
+import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.Mapping;
@@ -39,6 +42,11 @@ public class ArticleV1Controller {
     @GetMapping(path = "")
     public ArticlePageResponse readAll(Long boardId, Long page, Long pageSize) {
         return articleService.readAll(boardId, page, pageSize);
+    }
+
+    @GetMapping(path = "infinite-scroll")
+    public List<ArticleResponse> readAllInfiniteScroll(Long boardId, Long pageSize, @Nullable Long lastArticleId) {
+        return articleService.readAllInfiniteScroll(boardId, pageSize, lastArticleId);
     }
 
     @GetMapping(path = "{articleId:\\d+}")
