@@ -1,4 +1,4 @@
-package org.bobpark.article.data;
+package org.bobpark.comment.data;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -13,10 +13,9 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import org.junit.jupiter.api.Test;
 
+import org.bobpark.comment.domain.comment.entity.Comment;
+import org.bobpark.comment.domain.comment.repository.CommentRepository;
 import org.bobpark.common.snowflake.Snowflake;
-
-import org.bobpark.article.domain.article.entity.Article;
-import org.bobpark.article.domain.article.repository.ArticleRepository;
 
 @Slf4j
 @SpringBootTest
@@ -24,7 +23,7 @@ import org.bobpark.article.domain.article.repository.ArticleRepository;
 class DataInitializer {
 
     @Autowired
-    ArticleRepository articleRepository;
+    CommentRepository commentRepository;
 
     @Autowired
     TransactionTemplate transactionTemplate;
@@ -53,17 +52,22 @@ class DataInitializer {
 
     void insert() {
         transactionTemplate.executeWithoutResult(status -> {
+
+            Comment prev = null;
+
             for (int i = 0; i < BULK_INSERT_SIZE; i++) {
-                Article createdArticle =
-                    Article.builder()
-                        .articleId(snowflake.nextId())
-                        .title("title %s".formatted(i))
+                Comment createdComment =
+                    Comment.builder()
+                        .commentId(snowflake.nextId())
+                        .articleId(1L)
                         .content("content %s".formatted(i))
+                        .parentCommentId(i % 2 == 0 ? null : prev.getCommentId())
                         .writerId(1L)
-                        .boardId(1L)
                         .build();
 
-                articleRepository.save(createdArticle);
+                prev = createdComment;
+
+                createdComment = commentRepository.save(createdComment);
             }
         });
 
