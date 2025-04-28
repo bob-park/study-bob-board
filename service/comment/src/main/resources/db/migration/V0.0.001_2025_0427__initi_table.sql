@@ -13,13 +13,13 @@ create index idx_article_id_parent_comment_id_comment_id on comments (article_id
 
 create table comments_v2
 (
-    comment_id bigint                                                not null primary key,
-    content    varchar(3000)                                         not null,
-    article_id bigint                                                not null,
-    writer_id  bigint                                                not null,
-    path       varchar(25) character set utf8mb4 collate utf8mb4_bin not null,
-    deleted    bool                                                  not null,
-    created_at timestamp                                             not null
+    comment_id bigint        not null primary key,
+    content    varchar(3000) not null,
+    article_id bigint        not null,
+    writer_id  bigint        not null,
+    path       varchar(25)   not null,
+    deleted    bool          not null,
+    created_at timestamp     not null
 );
 
 create unique index idx_article_id_path on comments_v2 (article_id asc, path asc);

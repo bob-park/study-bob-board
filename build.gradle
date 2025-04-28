@@ -20,7 +20,7 @@ allprojects {
     }
 
     ext {
-        malgnStarterVersion = "1.0.4-RC2-2025.04.13"
+        malgnStarterVersion = "1.0.5-RC1-2025.04.25"
 
         springCloudVersion = '2024.0.0'
         springCloudNetflixVersion = '4.2.0'
