@@ -2,7 +2,10 @@ package org.bobpark.comment.domain.comment.repository;
 
 import java.util.Optional;
 
+import jakarta.persistence.LockModeType;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -26,6 +29,7 @@ public interface CommentV2Repository extends JpaRepository<CommentV2, Long> {
         order by path desc
         limit 1   
         """)
+    @Lock(LockModeType.OPTIMISTIC_FORCE_INCREMENT)
     Optional<String> findDescendantTopPath(@Param("articleId") Long articleId, @Param("pathPrefix") String pathPrefix);
 
 }
