@@ -57,24 +57,25 @@ public class ViewService {
         long viewCount = increaseViewCount(articleId);
 
         if (viewCount % BATCH_INSERT_SIZE == 0) {
-            articleViewCountRepository.findById(articleId)
-                .ifPresentOrElse(articleViewCount -> {
-                    articleViewCount.updateViewCount(viewCount);
-                }, () -> {
-                    ArticleViewCount createdViewCount =
-                        ArticleViewCount.builder()
-                            .articleId(articleId)
-                            .viewCount(viewCount)
-                            .build();
+            ArticleViewCount articleViewCount =
+                articleViewCountRepository.findById(articleId)
+                    .orElseGet(() -> {
+                        ArticleViewCount createdViewCount =
+                            ArticleViewCount.builder()
+                                .articleId(articleId)
+                                .build();
 
-                    createdViewCount = articleViewCountRepository.save(createdViewCount);
+                        createdViewCount = articleViewCountRepository.save(createdViewCount);
 
-                    log.debug("backed up view count. ({})", createdViewCount);
-                });
+                        return createdViewCount;
+                    });
+
+            articleViewCount.updateViewCount(viewCount);
+
+            log.debug("backed up view count. ({})", articleViewCount);
         }
 
         return viewCount;
-
     }
 
     private long increaseViewCount(long articleId) {
