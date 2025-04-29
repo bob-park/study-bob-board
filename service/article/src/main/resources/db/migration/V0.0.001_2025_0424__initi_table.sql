@@ -10,20 +10,23 @@ create table articles
     modified_at timestamp                not null
 );
 
-create index idx_board_id_article_id on article(board_id asc, article_id desc);
+create index idx_board_id_article_id on article (board_id asc, article_id desc);
 
 -- TODO postgres 로 변경 필요
-create table board_article_count (
-                                     board_id bigint not null primary key,
-                                     article_count bigint not null
+create table board_article_count
+(
+    board_id      bigint not null primary key,
+    article_count bigint not null
 );
 
-create table outbox (
-                        outbox_id bigint not null primary key,
-                        shard_key bigint not null,
-                        event_type varchar(100) not null,
-                        payload varchar(5000) not null,
-                        created_at datetime not null
+create table outbox
+(
+    outbox_id  bigint                  not null primary key,
+    shard_key  bigint                  not null,
+    event_type varchar(100)            not null,
+    payload    text                    not null,
+    created_at timestamp default now() not null
 );
 
-create index idx_shard_key_created_at on outbox(shard_key asc, created_at asc);
+create index idx_shard_key_created_at on outbox (shard_key asc, created_at asc);
+

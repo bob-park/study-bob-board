@@ -3,6 +3,8 @@ package org.bobpark.hot_article.domain.hotarticle.service;
 import java.util.List;
 import java.util.Objects;
 
+import jakarta.annotation.PostConstruct;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,6 +29,12 @@ public class HotArticleService {
 
     private final HotArticleListRepository hotArticleListRepository;
 
+    @PostConstruct
+    public void init() {
+        log.info("init hot article service");
+    }
+
+
     public void handleEvent(Event<EventPayload> event) {
         EventHandler<EventPayload> eventHandler = findEventHandler(event);
 
@@ -50,7 +58,7 @@ public class HotArticleService {
             .toList();
     }
 
-    private EventHandler<EventPayload> findEventHandler(Event<EventPayload> event) {
+    private  EventHandler<EventPayload> findEventHandler(Event<EventPayload> event) {
         return eventHandlers.stream()
             .filter(eventHandler -> eventHandler.supports(event))
             .findAny()
