@@ -1,6 +1,5 @@
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
     // spring cloud bootstrap
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
@@ -16,4 +15,8 @@ dependencies {
     implementation("com.querydsl:querydsl-jpa:${queryDslVersion}:jakarta")
     annotationProcessor("com.querydsl:querydsl-apt:${queryDslVersion}:jakarta")
     testAnnotationProcessor("com.querydsl:querydsl-apt:${queryDslVersion}:jakarta")
+
+    implementation 'org.springframework.kafka:spring-kafka'
+
+    implementation project(":common:event")
 }

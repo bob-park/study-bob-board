@@ -32,25 +32,6 @@ spring:
     redis:
       repositories:
         enabled: off
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${database_host:localhost:5432}/${database_name:keyflow}
-    username: ${database_username}
-    password: ${database_password}
-  jpa:
-    open-in-view: false
-    hibernate:
-      ddl-auto: validate
-    properties:
-      hibernate:
-        default_batch_fetch_size: 100
-        discriminator:
-          ignore_explicit_for_joined: on
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: ${keyflow_auth_issuer_host}
   cloud:
     openfeign:
       client:
@@ -60,6 +41,14 @@ spring:
   threads:
     virtual:
       enabled: on
+  kafka:
+    bootstrap-servers: ${kafka_servers:localhost:9092}
+    consumer:
+      group-id: ${kafka_consumer_group_id}
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      enable-auto-commit: off
+
 
 ## eureka
 eureka:
