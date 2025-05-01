@@ -105,5 +105,5 @@ logging:
       max-history: ${log_max_history:10}
   level:
     root: info
-    web: ${logs_web_level:info}
-    com.malgn: ${logs_malgn_level:info}
+    web: ${logs_level:info}
+    org.bobpark: ${logs_level:info}

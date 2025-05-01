@@ -24,7 +24,7 @@ import org.bobpark.like.repository.ArticleViewCountRepository;
 @Transactional(readOnly = true)
 public class ViewService {
 
-    private static final Duration LOCK_TIMEOUT = Duration.ofSeconds(1);
+    private static final Duration LOCK_TIMEOUT = Duration.ofSeconds(10);
     private static final int BATCH_INSERT_SIZE = 10;
     private static final String ARTICLE_COUNT_KEY_FORMAT = "article:%d:view:count";
     private static final String ARTICLE_COUNT_USER_LOCK_KEY_FORMAT = "article:%d:view:user:%d";
