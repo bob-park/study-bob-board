@@ -10,7 +10,7 @@ import com.malgn.common.id.showflake.Snowflake;
 import org.bobpark.common.event.Event;
 import org.bobpark.common.event.EventPayload;
 import org.bobpark.common.event.EventType;
-import org.bobpark.common.outboxmessagerelay.configure.MessageRelayConstants;
+import org.bobpark.common.outboxmessagerelay.domain.message.MessageRelayConstants;
 import org.bobpark.common.outboxmessagerelay.domain.outbox.entity.OutBox;
 
 @RequiredArgsConstructor

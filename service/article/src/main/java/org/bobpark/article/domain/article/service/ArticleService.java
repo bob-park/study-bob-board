@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import org.bobpark.article.domain.article.model.ArticlePageResponse;
 import org.bobpark.article.domain.article.utils.PageLimitCalculator;
+import org.bobpark.common.event.EventType;
+import org.bobpark.common.event.payload.CreateArticleEventPayload;
+import org.bobpark.common.outboxmessagerelay.domain.outbox.event.OutBoxEventPublisher;
 import org.bobpark.common.snowflake.Snowflake;
 
 import com.malgn.common.exception.NotFoundException;
@@ -30,6 +33,8 @@ public class ArticleService {
     private final Snowflake snowflake = new Snowflake();
     private final ArticleRepository articleRepository;
 
+    private final OutBoxEventPublisher publisher;
+
     @Transactional
     public ArticleResponse create(CreateArticleRequest createRequest) {
         Article createdArticle =
@@ -44,6 +49,18 @@ public class ArticleService {
         createdArticle = articleRepository.save(createdArticle);
 
         log.debug("created article: {}", createdArticle);
+
+        publisher.publish(
+            EventType.ARTICLE_CREATED,
+            CreateArticleEventPayload.builder()
+                .articleId(createdArticle.getArticleId())
+                .title(createdArticle.getTitle())
+                .content(createdArticle.getContent())
+                .boardId(createdArticle.getBoardId())
+                .writerId(createdArticle.getWriterId())
+                .createdAt(createdArticle.getCreatedAt())
+                .build(),
+            createdArticle.getBoardId());
 
         return ArticleResponse.builder()
             .articleId(createdArticle.getArticleId())

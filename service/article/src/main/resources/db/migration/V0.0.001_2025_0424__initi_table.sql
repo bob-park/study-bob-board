@@ -21,9 +21,9 @@ create table board_article_count
 
 create table outbox
 (
-    outbox_id  bigint                  not null primary key,
+    id         bigint                  not null primary key,
     shard_key  bigint                  not null,
-    event_type varchar(100)            not null,
+    type       varchar(100)            not null,
     payload    text                    not null,
     created_at timestamp default now() not null
 );

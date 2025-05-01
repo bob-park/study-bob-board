@@ -2,12 +2,14 @@ package org.bobpark.common.outboxmessagerelay.configure;
 
 import java.util.Map;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -20,10 +22,10 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import com.google.common.collect.Maps;
 
 @EnableAsync
-@Configuration
 @ComponentScan("org.bobpark.common.outboxmessagerelay")
 @EnableScheduling
-public class AppConfiguration {
+@AutoConfiguration
+public class MessageRelayConfiguration {
 
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
@@ -53,9 +55,9 @@ public class AppConfiguration {
     }
 
     @Bean
-    public Executor messageRelayPublishPendingExecutor() {
+    public ScheduledExecutorService messageRelayPublishPendingExecutor() {
         // single thread 로만 미전송 이벤트 전송
-        return Executors.newSingleThreadExecutor();
+        return Executors.newSingleThreadScheduledExecutor();
     }
 
 }

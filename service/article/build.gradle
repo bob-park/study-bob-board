@@ -17,5 +17,9 @@ dependencies {
     annotationProcessor("com.querydsl:querydsl-apt:${queryDslVersion}:jakarta")
     testAnnotationProcessor("com.querydsl:querydsl-apt:${queryDslVersion}:jakarta")
 
+    implementation 'org.springframework.kafka:spring-kafka'
+
     implementation project(":common:snowflake")
+    implementation project(":common:event")
+    implementation project(":common:outbox-message-relay")
 }
