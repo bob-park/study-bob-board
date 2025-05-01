@@ -34,7 +34,6 @@ public class MessageRelay {
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final KafkaTemplate<String, String> messageRelayKafkaTemplate;
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
     @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
     public void createOutbox(OutBoxEvent event) {
         log.debug("createOutbox - {}", event);
