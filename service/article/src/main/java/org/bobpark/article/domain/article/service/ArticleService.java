@@ -59,6 +59,7 @@ public class ArticleService {
                 .boardId(createdArticle.getBoardId())
                 .writerId(createdArticle.getWriterId())
                 .createdAt(createdArticle.getCreatedAt())
+                .boardArticleCount(count(createdArticle.getBoardId()) + 1)
                 .build(),
             createdArticle.getBoardId());
 
@@ -138,6 +139,12 @@ public class ArticleService {
         return articles.stream()
             .map(ArticleResponse::from)
             .toList();
+    }
+
+    public Long count(Long boardId) {
+
+        // ! 내가 count 저장하는 ddl 을 안만들었네 데헷
+        return articleRepository.count(boardId, 1_000L);
     }
 
 }

@@ -1,4 +1,4 @@
-package org.bobpark.article_read.domain.article.model;
+package org.bobpark.article_read.domain.article.feign.model;
 
 import java.time.LocalDateTime;
 

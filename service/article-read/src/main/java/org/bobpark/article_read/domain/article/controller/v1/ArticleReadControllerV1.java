@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.bobpark.article_read.domain.article.model.ArticleReadPageResponse;
 import org.bobpark.article_read.domain.article.model.ArticleReadResponse;
 import org.bobpark.article_read.domain.article.service.ArticleReadService;
 
@@ -22,6 +23,11 @@ public class ArticleReadControllerV1 {
     @GetMapping(path = "{articleId:\\d+}")
     public ArticleReadResponse read(@PathVariable Long articleId) {
         return readService.read(articleId);
+    }
+
+    @GetMapping(path = "")
+    public ArticleReadPageResponse readAll(Long boardId, Long page, Long pageSize) {
+        return readService.readAll(boardId, page, pageSize);
     }
 
 }

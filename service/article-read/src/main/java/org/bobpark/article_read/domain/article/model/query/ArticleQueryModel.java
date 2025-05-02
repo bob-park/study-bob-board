@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 import lombok.Builder;
 
-import org.bobpark.article_read.domain.article.model.ArticleResponse;
+import org.bobpark.article_read.domain.article.feign.model.ArticleResponse;
 import org.bobpark.common.event.payload.CreateArticleEventPayload;
 
 @Builder
